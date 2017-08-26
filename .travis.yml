@@ -8,5 +8,6 @@ go:
 
 script:
  - go fmt
- - go lint
+ - go get -u github.com/golang/lint/golint
+ - golint
  - go vet
