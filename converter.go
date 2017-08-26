@@ -1,24 +1,24 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
 	"io/ioutil"
+	"net/http"
 )
 
 const FIXER_URL = "http://api.fixer.io/latest?base="
 
 type FixerResponse struct {
-	Name string `json:"base"`
-	Date string `json:"date"`
-	Rates map[string] float64 `json:"rates"`
+	Name  string             `json:"base"`
+	Date  string             `json:"date"`
+	Rates map[string]float64 `json:"rates"`
 }
 
 func Convert(base ConvertibleCurrency, amount float64) (map[Currency]float64, error) {
 	ratesUrl := FIXER_URL + base.Name()
 	fixerResponse, err := getRates(ratesUrl)
 
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -34,11 +34,12 @@ func Convert(base ConvertibleCurrency, amount float64) (map[Currency]float64, er
 
 func getRates(ratesUrl string) (FixerResponse, error) {
 	response, err := http.Get(ratesUrl)
-	defer response.Body.Close()
 
 	if err != nil {
 		return FixerResponse{}, err
 	}
+
+	defer response.Body.Close()
 
 	body, err := ioutil.ReadAll(response.Body)
 

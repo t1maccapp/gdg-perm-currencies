@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/urfave/cli"
 	"os"
 	"strconv"
-	"fmt"
 )
 
 const APP_NAME = "GDG Perm currencies converter"
@@ -15,13 +15,13 @@ func main() {
 	app.Name = APP_NAME
 	app.Usage = APP_USAGE
 
-	app.Flags = []cli.Flag {
+	app.Flags = []cli.Flag{
 		cli.StringFlag{
-			Name: "currency, c",
+			Name:  "currency, c",
 			Usage: "Base currency",
 		},
 		cli.StringFlag{
-			Name: "amount, a",
+			Name:  "amount, a",
 			Usage: "Amount of base currency",
 		},
 	}
@@ -41,7 +41,7 @@ func main() {
 
 		currency := Currency{c.String("currency")}
 
-		amount, err := strconv.ParseFloat(c.String("amount"),64)
+		amount, err := strconv.ParseFloat(c.String("amount"), 64)
 		if err != nil {
 			fmt.Println("Amount should be parsable float")
 			os.Exit(1)
